@@ -12,7 +12,6 @@ window.onload = () => {
 
 function main() {
     const root = document.getElementById('root');
-
     const btn = document.getElementById('change-btn');
 
     btn.addEventListener('click', function () {
