@@ -3,9 +3,13 @@
  * - Change the background color by generating random hex color by clicking a button
  * - Also display the hex code to a disabled input field
  * - Add a button to copy the color code
+ * - Add a toast message when copied
  */
 
 // Steps
+
+//globals
+let div = null;
 
 // Step 1 - create onload handler
 window.onload = () => {
@@ -27,6 +31,12 @@ function main() {
 
     copyBtn.addEventListener('click', function () {
 		navigator.clipboard.writeText(output.value);
+		if(div !== null){
+			div.remove();
+			div = null;
+		}
+
+		generateToastMessage(`${output.value} copied`);
 	});
 
 	
@@ -43,8 +53,34 @@ function generateHexColor() {
 	return `#${red.toString(16)}${green.toString(16)}${blue.toString(16)}`;
 }
 
+
+function generateToastMessage(msg) {
+	div = document.createElement('div');
+	div.innerText = msg;
+	div.className = 'toast-message toast-message-slide-in';
+
+	div.addEventListener('click', function() {
+		div.classList.remove('toast-message-slide-in');
+		div.classList.add('toast-message-slide-out');
+
+		div.addEventListener('animationend', function() {
+			div.remove();
+			div = null;
+		});
+	});
+	
+
+	document.body.appendChild(div);
+}
+
 // step 3 - collect all necessary references
 
 // step 4 - handle the change button click event
 
 // step 5 - handle the copy button click event
+
+// step 6 - Activate toast message 
+
+// step 7 - Create a dynamic toast messgae
+
+// step 8 - Clear toast message
