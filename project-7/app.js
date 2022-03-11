@@ -27,11 +27,12 @@ function main() {
 	const copyBtn = document.getElementById('copy-btn');
 
 	changeBtn.addEventListener('click', function () {
-		const bgColor = generateHexColor();
-		const bgColorRGB = generateRGBColor();
-		root.style.backgroundColor = bgColor;
-		output.value = bgColor.substring(1);
-		output2.value = bgColorRGB;
+		const color = generateColorDecimal();
+		const hex = generateHexColor(color);
+		const rgb = generateRGBColor(color);
+		root.style.backgroundColor = hex;
+		output.value = hex.substring(1);
+		output2.value = rgb;
 	});
 
 	copyBtn.addEventListener('click', function () {
@@ -75,7 +76,7 @@ function generateColorDecimal() {
 }
 
 // function 2 - generate hex color code
-function generateHexColor(red, green, blue) {
+function generateHexColor({ red, green, blue }) {
 
 	const getTwoCode = (value) => {
 		const hex = value.toString(16);
@@ -88,7 +89,7 @@ function generateHexColor(red, green, blue) {
 
 
 // function 3 - generate rgba color Code
-function generateRGBColor(red, green, blue) {
+function generateRGBColor({ red, green, blue }) {
 	return `rgb(${red}, ${green}, ${blue})`;
 }
 
