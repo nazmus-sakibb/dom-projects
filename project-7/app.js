@@ -5,6 +5,8 @@
  * - Add a button to copy the color code
  * - Add a toast message when copied
  * - User can type their own hex code too
+ * - Show rgb color too, but don't need to edit it
+ * - user can also copy the rgb color
  */
 
 // Steps
@@ -12,7 +14,7 @@
 // Globals
 let div = null;
 
-// Step 1 - create onload handler
+
 window.onload = () => {
 	main();
 };
@@ -20,13 +22,16 @@ window.onload = () => {
 function main() {
 	const root = document.getElementById('root');
 	const output = document.getElementById('output');
+	const output2 = document.getElementById('output2');
 	const changeBtn = document.getElementById('change-btn');
 	const copyBtn = document.getElementById('copy-btn');
 
 	changeBtn.addEventListener('click', function () {
 		const bgColor = generateHexColor();
+		const bgColorRGB = generateRGBColor();
 		root.style.backgroundColor = bgColor;
 		output.value = bgColor.substring(1);
+		output2.value = bgColorRGB;
 	});
 
 	copyBtn.addEventListener('click', function () {
@@ -53,16 +58,40 @@ function main() {
 	});
 }
 
-// step 2 - random color generator function
-function generateHexColor() {
-	// #000000 #ffffff
-	// 255, 255, 255 -> #FFFFFF
+
+
+// function 1 - generate three random decimal numbers for red, green and blue
+// return as an object
+function generateColorDecimal() {
 	const red = Math.floor(Math.random() * 255);
 	const green = Math.floor(Math.random() * 255);
 	const blue = Math.floor(Math.random() * 255);
 
-	return `#${red.toString(16)}${green.toString(16)}${blue.toString(16)}`;
+	return {
+		red,
+		green,
+		blue
+	}
 }
+
+// function 2 - generate hex color code
+function generateHexColor(red, green, blue) {
+
+	const getTwoCode = (value) => {
+		const hex = value.toString(16);
+
+		return hex.length === 1 ? `0${hex}` : hex;
+	}
+
+	return `#${getTwoCode(red)}${getTwoCode(green)}${getTwoCode(blue)}`.toUpperCase();
+}
+
+
+// function 3 - generate rgba color Code
+function generateRGBColor(red, green, blue) {
+	return `rgb(${red}, ${green}, ${blue})`;
+}
+
 
 function generateToastMessage(msg) {
 	div = document.createElement('div');
@@ -90,6 +119,11 @@ function isValidHex(color) {
 	return /^[0-9A-Fa-f]{6}$/i.test(color);
 }
 
+
+// Step 1 - create onload handler
+
+// step 2 - random color generator function
+
 // step 3 - collect all necessary references
 
 // step 4 - handle the change button click event
@@ -107,3 +141,7 @@ function isValidHex(color) {
 // step 10 - implement change handler on input field
 
 // step 11 - prevent copying hex code if it is not valid
+
+// step 12 - refactor the color generator function
+
+// step 13 - update color code to display rgb colors
